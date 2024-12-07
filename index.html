@@ -3,16 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" rel="stylesheet">
     <script type="module" src="script.js"></script>
     <title>Yum yum gimme sum</title>
 </head>
 <body>
-    <section class="cart"></section>
-    <section class="title">
-        <h1>Menu</h1>
+    <!-- Menu section -->
+    <section class="menu-section hidden">
+        <header class="header">
+
+            <div class="cart-icon">
+              <span class="cart-count">0</span>
+              <img src="images/cart.jpg" alt="A cart icon">
+            </div>
+        </header>
+        <h1>MENY</h1>  
         <div class="menu-container">
             
+            <div class="menu-category">
+                
+                <div class="menu-items" id="wontonItems">
+                    
+                </div>
+            </div>
+            <div class="menu-category">
+                <h2>Dips</h2>
+                <div class="menu-items" id="dipItems">
+                    
+                </div>
+            </div>
+            <div class="menu-category">
+                <h2>Drinks</h2>
+                <div class="menu-items" id="drinkItems">
+                    
+                </div>
+            </div>
         </div>
     </section>
+
 </body>
 </html>
