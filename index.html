@@ -24,23 +24,52 @@
             <div class="menu-category">
                 
                 <div class="menu-items" id="wontonItems">
-                    
+                    <!-- here comes the wontons -->
                 </div>
             </div>
             <div class="menu-category">
                 <h2>Dips</h2>
                 <div class="menu-items" id="dipItems">
-                    
+                    <!-- here comes the dips -->
                 </div>
             </div>
             <div class="menu-category">
                 <h2>Drinks</h2>
                 <div class="menu-items" id="drinkItems">
-                    
+                    <!-- here comes the drinks -->
                 </div>
             </div>
         </div>
     </section>
+    <!-- Cart Section -->
+    <section id="cartSection" class="cart-section hidden">
+        <h1>VARUKORG</h1>
+        <div class="cart-container">
+        
+        </div>
+        <div class="cart-summary">
+            <p>Total inkl. 20% moms: <span id="cartTotal">0 SEK</span></p>
+            <button id="checkoutBtn">TAKE MY MONEY!</button>
+        </div>
+    </section>
 
+    <!-- Confirmation Section -->
+    <section id="confirmationSection" class="confirmation-section hidden">
+        <h1>DINA WONTONS TILLAGAS!</h1>
+        <p>ETA 5 MIN</p>
+        <p>#<span id="orderId"></span></p>
+        <button id="viewReceiptBtn">SE KVITTO</button>
+        <button id="newOrderBtn">GÖR EN NY BESTÄLLNING</button>
+    </section>
+
+    <!-- Receipt Section -->
+    <section id="receiptSection" class="receipt-section hidden">
+        <h1>KVITTO</h1>
+        <div class="receipt-container">
+        
+        </div>
+        <p>Total inkl. moms: <span id="receipt-total"></span></p>
+        <button id="newOrderReceiptBtn">GÖR EN NY BESTÄLLNING</button>
+    </section>
 </body>
 </html>
