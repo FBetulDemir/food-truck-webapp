@@ -16,18 +16,14 @@ body {
 }
   
 .menu-section h1 {
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 26.4px;
-    margin: 20px;
+    margin: 0 3em;
 }
   
 
 .menu-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px;
+
     background-color: #489078;
     color: white;
     min-height: 100vh;
@@ -37,6 +33,7 @@ body {
     display: flex;
     justify-content: flex-end;
     width: 100%;
+    padding: 2em;
 }
   
 .cart-icon {
@@ -44,11 +41,16 @@ body {
     align-items: center;
     position: relative;
     cursor: pointer;
+    border: 3px solid white;
+    border-radius: 5px;
+    background-color: #f4f4f4;
+    padding: 0.5em;
 }
   
 .cart-icon img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
+    border: 3px solid white;
 }
   
 .cart-count {
@@ -69,15 +71,15 @@ body {
   
 
 .menu-container {
-    background-color: #605858;
-    width: 90%;
-    max-width: 358px; /* Maintain Figma width */
     border-radius: 8px;
-    padding: 10px;
+    line-height: 2em;
 }
   
 .menu-category {
-    margin-bottom: 20px;
+    background-color: #605858;
+    border-radius: 8px;
+    margin:2em 3em;
+    padding: 1em;
 }
   
 .menu-category h2 {
@@ -90,48 +92,58 @@ body {
 
 .menu-items {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 10px;
 }
+
+#wontonItems div{
+    background-color: #605858;
+    border-bottom:1px solid #999696;
+
+}
   
-.menu-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#wontonItems div:nth-last-child(1){
+    border: transparent;
+}
+
+.grid-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em; 
     width: 100%;
-    background-color: white;
+}
+
+.grid-items .dips-drinks{
+    background-color: #999696;
+    padding: 0.7em 0.5em;
     border-radius: 4px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.grid-items .dips-drinks:hover{
+    background-color: #474545;
+
+}
+  
+.menu-items {
+    border-radius: 4px;
+    color: white;
 }
   
 .menu-item h3 {
-    font-size: 16px;
+    font-size: 22px;
     font-weight: 700;
     margin: 0;
-    color: #333;
+    
 }
   
 .menu-item p {
-    font-size: 14px;
+    font-size: 16px;
     margin: 0;
-    color: #666;
-}
-  
-.menu-item button {
-    background-color: #489078;
     color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 12px;
-    font-size: 14px;
     cursor: pointer;
 }
-  
-.menu-item button:hover {
-    background-color: #3d7a64;
-}
-  
+
+
 
 @media (min-width: 768px) {
     .menu-container {
@@ -140,13 +152,13 @@ body {
     }
   
     .menu-items {
-      flex-wrap: nowrap; /* Maintain horizontal scrolling on tablets */
+      flex-wrap: nowrap;
       overflow-x: auto;
       gap: 20px;
     }
   
     .menu-item {
-      flex: 0 0 45%; /* Display 2 items per row */
+      flex: 0 0 45%; 
     }
 }
   
@@ -156,10 +168,10 @@ body {
     }
   
     .menu-items {
-      flex-wrap: wrap; /* Adapt back to wrapping on desktops */
+      flex-wrap: wrap;
     }
   
     .menu-item {
-      flex: 0 0 30%; /* Display 3 items per row */
+      flex: 0 0 30%;
     }
 }

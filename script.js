@@ -40,21 +40,34 @@ export function renderMenu(menuData) {
   menuData.forEach((item) => {
     const menuItem = document.createElement('div');
     menuItem.classList.add('menu-item');
-
-    menuItem.innerHTML = `
-      <div>
-        <h3>${item.name}</h3>
-        <p>${item.description}</p>
-        <p><strong>${item.price} SEK</strong></p>
+   
+    if (item.type === 'wonton') {
+      menuItem.innerHTML = `
+      <div class = "wonton">
+        <h3>${item.name}  ...............................  <strong>${item.price} SEK</strong></h3>
+        <p>${item.ingredients}</p>
+        <p></p>
       </div>
     `;
 
-   
-    if (item.type === 'wonton') {
       wontonItems.appendChild(menuItem);
     } else if (item.type === 'dip') {
+      const dipPrice = document.querySelector(".dips-title");
+      dipPrice.innerHTML= `<h3>Dipsås  ...............................  <strong>${item.price} SEK</strong></h3>`
+      menuItem.innerHTML = `
+        <div class="dips-drinks">
+          <p>${item.name}</p>
+        </div>
+      `;
       dipItems.appendChild(menuItem);
     } else if (item.type === 'drink') {
+      const drinkPrice = document.querySelector(".drinks-title");
+      drinkPrice.innerHTML= `<h3>Dricka  ...............................  <strong>${item.price} SEK</strong></h3>`
+      menuItem.innerHTML = `
+        <div class="dips-drinks">
+          <p>${item.name}</p>
+        </div>
+      `;
       drinkItems.appendChild(menuItem);
     }
   });
