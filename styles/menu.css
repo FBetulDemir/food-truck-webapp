@@ -99,7 +99,10 @@ body {
 #wontonItems div{
     background-color: #605858;
     border-bottom:1px solid #999696;
+}
 
+#wontonItems div:hover{
+    background-color: #252424;
 }
   
 #wontonItems div:nth-last-child(1){
@@ -120,8 +123,7 @@ body {
 }
 
 .grid-items .dips-drinks:hover{
-    background-color: #474545;
-
+    background-color: #252424;
 }
   
 .menu-items {
