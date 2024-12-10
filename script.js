@@ -2,10 +2,15 @@ const menuItem = document.querySelectorAll(".menu-items");
 const wontonItems = document.getElementById('wontonItems');
 const dipItems = document.getElementById('dipItems');
 const drinkItems = document.getElementById('drinkItems');
+const cardIcon = document.querySelector(".cart-image");
+const menuSection =document.querySelector(".menu-section");
+const cartSection =document.querySelector(".cart-section");
 
 let cart = {};
 
 const apiKey = "yum-7BTxHCyHhzIME5TI";
+
+
 
 export async function fetchMenu(apiKey) {
   const url = 'https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/menu';
@@ -89,6 +94,15 @@ export function renderMenu(menuData) {
   }
 })();
 
+
+//cart icon event listener to switch between 2 pages
+
+cardIcon.addEventListener("click", ()=>{
+  console.log("icon clicked")
+  cartSection.classList.remove("hidden");
+  menuSection.classList.add("hidden");
+
+})
 
 //Here starts the second page (cart)
 
