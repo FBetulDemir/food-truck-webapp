@@ -1,3 +1,6 @@
+import { renderMenu } from "./renderMenu.js";
+
+
 const apiKey = "yum-7BTxHCyHhzIME5TI";
   
 export async function fetchMenu(apiKey) {
@@ -25,41 +28,6 @@ export async function fetchMenu(apiKey) {
 }
 
 const menuData = fetchMenu(apiKey);
-
-
-export function renderMenu(menuData) {
-  const wontonItems = document.getElementById('wontonItems');
-  const dipItems = document.getElementById('dipItems');
-  const drinkItems = document.getElementById('drinkItems');
-
-  
-  wontonItems.innerHTML = '';
-  dipItems.innerHTML = '';
-  drinkItems.innerHTML = '';
-
-  menuData.forEach((item) => {
-    const menuItem = document.createElement('div');
-    menuItem.classList.add('menu-item');
-
-    menuItem.innerHTML = `
-      <div>
-        <h3>${item.name}</h3>
-        <p>${item.description}</p>
-        <p><strong>${item.price} SEK</strong></p>
-      </div>
-    `;
-
-   
-    if (item.type === 'wonton') {
-      wontonItems.appendChild(menuItem);
-    } else if (item.type === 'dip') {
-      dipItems.appendChild(menuItem);
-    } else if (item.type === 'drink') {
-      drinkItems.appendChild(menuItem);
-    }
-  });
-}
-
 
   
 (async function initMenu() {

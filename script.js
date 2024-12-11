@@ -1,3 +1,6 @@
+import { fetchMenu } from "./components/menu.js";
+import { renderMenu } from "./components/renderMenu.js";
+
 const menuItem = document.querySelectorAll(".menu-items");
 const wontonItems = document.getElementById('wontonItems');
 const dipItems = document.getElementById('dipItems');
@@ -5,15 +8,17 @@ const drinkItems = document.getElementById('drinkItems');
 const cardIcon = document.querySelector(".cart-image");
 const menuSection =document.querySelector(".menu-section");
 const cartSection =document.querySelector(".cart-section");
+const cartCount = document.querySelector(".cart-count");
 
 let cart = {};
+let itemCount = 0;
 
 const apiKey = "yum-7BTxHCyHhzIME5TI";
 
 
 
-export async function fetchMenu(apiKey) {
-  const url = 'https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/menu';
+export async function fetchTenants(apiKey) {
+  const url = 'https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/{tenant}/orders';
 
   try {
     const response = await fetch(url, {
@@ -27,72 +32,22 @@ export async function fetchMenu(apiKey) {
       throw new Error(`Error: ${response.status} - ${response.statusText}`);
     }
 
-    const menuData = await response.json();
-    console.log('Fetched Menu Data:', menuData);
-    return menuData;
+    const tenants = await response.json();
+    console.log('Fetched Tenants Data:', tenants);
+    return tenants;
     
   } catch (error) {
     console.error('Failed to fetch menu data:', error.message);
   }
 }
 
-
-export function renderMenu(menuData) {
-
-  wontonItems.innerHTML = '';
-  dipItems.innerHTML = '';
-  drinkItems.innerHTML = '';
-
-  menuData.forEach((item) => {
-    const menuItem = document.createElement('div');
-    menuItem.classList.add('menu-item');
-    menuItem.setAttribute('data-id', item.id);
-   
-    if (item.type === 'wonton') {
-      menuItem.innerHTML = `
-        <div class="wonton">
-          <h3 class="item-name">${item.name}  ...............................  <strong class="item-price">${item.price} SEK</strong></h3>
-          <p>${item.ingredients}</p>
-          <p></p>
-        </div>
-    `;
-      wontonItems.appendChild(menuItem);
-
-    } else if (item.type === 'dip') {
-      const dipPrice = document.querySelector(".dips-title");
-      dipPrice.innerHTML= `<h3>Dipsås  ...............................  <strong class="item-price">${item.price} SEK</strong></h3>`
-      menuItem.innerHTML = `
-        <div class="dips-drinks">
-          <p class="item-name">${item.name}</p>
-        </div>
-      `;
-      dipItems.appendChild(menuItem);
-
-    } else if (item.type === 'drink') {
-      const drinkPrice = document.querySelector(".drinks-title");
-      drinkPrice.innerHTML= `<h3>Dricka  ...............................  <strong class="item-price">${item.price} SEK</strong></h3>`
-      menuItem.innerHTML = `
-        <div class="dips-drinks">
-          <p class="item-name">${item.name}</p>
-        </div>
-      `;
-      drinkItems.appendChild(menuItem);
-    }
-  });
-  attachEventListeners()
-}
-
-
-  
-(async function initMenu() {
-  const menuData = await fetchMenu(apiKey);
-
-  if (menuData && menuData.items) {
-    renderMenu(menuData.items);
-  } else {
-    console.error('Menu data is not in the expected format or is empty.');
+(async function () {
+  const tenants = await fetchTenants(apiKey);
+  if (tenants) {
+    console.log('Available Tenants:', tenants);
   }
 })();
+
 
 
 //cart icon event listener to switch between 2 pages
@@ -117,14 +72,13 @@ function addToCart(item) {
   renderCart()
 }
 
-function attachEventListeners() {
+export function attachEventListeners() {
   const menuItems = document.querySelectorAll(".menu-item");
 
   menuItems.forEach((menuItem) => {
     menuItem.addEventListener("click", () => {
-
+    
       const itemId = menuItem.getAttribute("data-id");
-
       const itemNameElement = menuItem.querySelector(".item-name");
       const itemName = itemNameElement ? itemNameElement.textContent : "";
 
@@ -150,6 +104,11 @@ function attachEventListeners() {
   
       const item = { id: itemId, name: itemName, price: itemPrice };
 
+
+      // this adds to red item count that is on the cart icon.
+      itemCount ++;
+      console.log (itemCount);
+      cartCount.innerHTML = `${itemCount}`;
       console.log(`Clicked item:`, item);
       addToCart(item);
     });
