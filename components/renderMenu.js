@@ -10,7 +10,9 @@ export function renderMenu(menuData) {
     const menuItem = document.createElement('div');
     menuItem.classList.add('menu-item');
     menuItem.setAttribute('data-id', item.id);
-   
+    // console.log("Menu Item ID:", item.id, "Name:", item.name);
+
+
     if (item.type === 'wonton') {
       menuItem.innerHTML = `
         <div class="wonton">

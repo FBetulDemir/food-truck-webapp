@@ -50,7 +50,8 @@
         </div>
         <div class="cart-summary">
             <p>Total inkl. 20% moms: <span id="cartTotal">0 SEK</span></p>
-            <button id="checkoutBtn">TAKE MY MONEY!</button>
+            <button class="checkoutBtn">TAKE MY MONEY!</button>
+            <p id="orderId"></p>
         </div>
     </section>
 
@@ -59,18 +60,16 @@
         <h1>DINA WONTONS TILLAGAS!</h1>
         <p>ETA 5 MIN</p>
         <p>#<span id="orderId"></span></p>
-        <button id="viewReceiptBtn">SE KVITTO</button>
-        <button id="newOrderBtn">GÖR EN NY BESTÄLLNING</button>
+        <button class="viewReceiptBtn">SE KVITTO</button>
+        <button class="newOrderBtn">GÖR EN NY BESTÄLLNING</button>
     </section>
-
+  
     <!-- Receipt Section -->
     <section id="receiptSection" class="receipt-section hidden">
         <h1>KVITTO</h1>
-        <div class="receipt-container">
-        
-        </div>
+        <div class="receipt-container"></div>
         <p>Total inkl. moms: <span id="receipt-total"></span></p>
-        <button id="newOrderReceiptBtn">GÖR EN NY BESTÄLLNING</button>
-    </section>
+        <button class="newOrderBtn">GÖR EN NY BESTÄLLNING</button>
+    </section> 
 </body>
 </html>

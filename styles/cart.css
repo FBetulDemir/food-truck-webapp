@@ -54,7 +54,7 @@
     text-align: center;
 }
 
-#checkoutBtn {
+.checkoutBtn {
     width: 100%;
     padding: 12px;
     background-color: #333;
@@ -64,6 +64,6 @@
     cursor: pointer;
 }
 
-#checkoutBtn:hover {
+.checkoutBtn:hover {
     background-color: #444;
 }
