@@ -1,7 +1,7 @@
 import { fetchMenu } from "./components/menu.js";
 import { renderMenu } from "./components/renderMenu.js";
 import {renderCart} from "./components/renderCart.js";
-import { resetToMenu } from "./components/resetToMenu.js";
+// import { resetToMenu } from "./components/resetToMenu.js";
 
 const menuItem = document.querySelectorAll(".menu-items");
 const wontonItems = document.getElementById('wontonItems');
@@ -263,44 +263,44 @@ async function fetchOrdersByTenant() {
     console.log("Fetched Orders for Tenant:", orders);
 
     // Render or handle orders here
-    renderOrderList(orders);
+    //renderOrderList(orders);
   } catch (error) {
     console.error("Failed to fetch orders:", error.message);
   }
 }
 
 
-function renderOrderList(orders) {
-  const orderListContainer = document.querySelector(".confirmation-section");
-  orderListContainer.innerHTML = "<h2>Fetched Orders</h2>";
+// function renderOrderList(orders) {
+//   const orderListContainer = document.querySelector(".receipt-section");
+//   orderListContainer.innerHTML = "<h2>Fetched Orders</h2>";
 
-  if (orders.length === 0) {
-    orderListContainer.innerHTML += "<p>No orders found.</p>";
-    return;
-  }
+//   if (orders.length === 0) {
+//     orderListContainer.innerHTML += "<p>No orders found.</p>";
+//     return;
+//   }
 
-  const orderHTML = orders
-    .map(
-      (order) => `
-    <div>
-      <h3>Order ID: ${order.id}</h3>
-      <p>Total Value: ${order.orderValue} SEK</p>
-      <ul>
-        ${order.items
-          .map(
-            (item) =>
-              `<li>${item.name} - Quantity: ${item.quantity}, Price: ${item.price} SEK</li>`
-          )
-          .join("")}
-      </ul>
-      <p>Status: ${order.state}</p>
-    </div>
-  `
-    )
-    .join("");
+//   const orderHTML = orders
+//     .map(
+//       (order) => `
+//     <div>
+//       <h3>Order ID: ${order.id}</h3>
+//       <p>Total Value: ${order.orderValue} SEK</p>
+//       <ul>
+//         ${order.items
+//           .map(
+//             (item) =>
+//               `<li>${item.name} - Quantity: ${item.quantity}, Price: ${item.price} SEK</li>`
+//           )
+//           .join("")}
+//       </ul>
+//       <p>Status: ${order.state}</p>
+//     </div>
+//   `
+//     )
+//     .join("");
 
-  orderListContainer.innerHTML += orderHTML;
-}
+//   orderListContainer.innerHTML += orderHTML;
+// }
 
 
 
@@ -350,31 +350,31 @@ async function fetchOrderById(orderId) {
 }
 
 
-function renderOrderDetails(order) {
-  const orderDetailsContainer = document.querySelector(".confirmation-section");
+// function renderOrderDetails(order) {
+//   const orderDetailsContainer = document.querySelector(".receipt-section");
 
 
-  orderDetailsContainer.innerHTML = "";
+//   orderDetailsContainer.innerHTML = "";
 
 
-  // const orderHTML = `
-  //   <h2>Order ID: ${order.id}</h2>
-  //   <p><strong>Total Price:</strong> ${order.total} SEK</p>
-  //   <h3>Items Ordered:</h3>
-  //   <ul>
-  //     ${order.items
-  //       .map(
-  //         (item) => `
-  //           <li>${item.name} - Quantity: ${item.quantity}, Price: ${item.price} SEK</li>
-  //         `
-  //       )
-  //       .join("")}
-  //   </ul>
-  // `;
+//   const orderHTML = `
+//     <h2>Order ID: ${order.id}</h2>
+//     <p><strong>Total Price:</strong> ${order.total} SEK</p>
+//     <h3>Items Ordered:</h3>
+//     <ul>
+//       ${order.items
+//         .map(
+//           (item) => `
+//             <li>${item.name} - Quantity: ${item.quantity}, Price: ${item.price} SEK</li>
+//           `
+//         )
+//         .join("")}
+//     </ul>
+//   `;
 
 
-  // orderDetailsContainer.innerHTML = orderHTML;
-}
+//   orderDetailsContainer.innerHTML = orderHTML;
+// }
 
 
 
@@ -408,7 +408,7 @@ function displayOrderConfirmation(response) {
   viewReceiptBtn.addEventListener("click", () => {
     console.log("Fetching receipt for Order ID:", orderDetails.id);
     renderReceipt(orderDetails.id);
-    renderOrderList(orderDetails.id)
+
   });
 
 }
@@ -452,10 +452,10 @@ async function renderReceipt(orderId) {
       </ul>
     `;
 
-    // Display total value
+
     receiptTotal.textContent = `${receipt.orderValue} SEK`;
 
-    // Switch to receipt section
+
     confirmationSection.classList.add("hidden");
     receiptSection.classList.remove("hidden");
   } catch (error) {
@@ -474,3 +474,15 @@ newOrderBtn.addEventListener("click", () => {
 });
 
 
+export function resetToMenu() {
+
+  cart = {};
+  itemCount = 0;
+  renderCart();
+  cartCount.textContent = "0";
+
+
+  receiptSection.classList.add("hidden");
+  confirmationSection.classList.add("hidden");
+  menuSection.classList.remove("hidden");
+}

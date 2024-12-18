@@ -1,3 +1,5 @@
+import {renderCart} from "./renderCart.js"
+
 export function resetToMenu() {
 
   cart = {};
