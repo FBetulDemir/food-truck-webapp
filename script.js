@@ -1,6 +1,7 @@
 import { fetchMenu } from "./components/menu.js";
 import { renderMenu } from "./components/renderMenu.js";
-import {renderCart} from "./components/renderCart.js"
+import {renderCart} from "./components/renderCart.js";
+import { resetToMenu } from "./components/resetToMenu.js";
 
 const menuItem = document.querySelectorAll(".menu-items");
 const wontonItems = document.getElementById('wontonItems');
@@ -27,7 +28,7 @@ const apiKey = "yum-7BTxHCyHhzIME5TI";
 let tenantId = "";
 
 
-//cart icon event listener to switch between 2 pages
+//cart icon event listener to switch between 2 pages (menu and cart pages)
 
 cardIcon.addEventListener("click", ()=>{
   console.log("icon clicked")
@@ -167,13 +168,7 @@ async function placeOrder() {
     return;
   }
 
-  // Map cart items to include only ID and quantity
-  const orderItems = Object.values(cart).map((item) => ({
-    id: Number(item.id), // Ensure the ID is a number
-    quantity: Number(item.quantity), // Ensure quantity is a number
-  }));
-
-  console.log("Order Payload Sent:", JSON.stringify({ items: orderItems }));
+  const orderItems = Object.values(cart).map((item) => Number(item.id)); // Fix payload
 
   if (orderItems.length === 0) {
     console.error("Cannot place an order. Cart is empty.");
@@ -201,10 +196,11 @@ async function placeOrder() {
     const result = await response.json();
     console.log("Order successfully placed:", result);
 
-    // Clear cart and reset UI
+
     cart = {};
     renderCart();
     cartCount.textContent = "0";
+
 
     displayOrderConfirmation(result);
   } catch (error) {
@@ -213,10 +209,8 @@ async function placeOrder() {
 }
 
 
-
 document.querySelector(".checkoutBtn").addEventListener("click", () => {
   placeOrder();
-  displayOrderConfirmation(orderId)
 });
 
 
@@ -275,7 +269,7 @@ async function fetchOrdersByTenant() {
   }
 }
 
-// Display order details in the confirmation section
+
 function renderOrderList(orders) {
   const orderListContainer = document.querySelector(".confirmation-section");
   orderListContainer.innerHTML = "<h2>Fetched Orders</h2>";
@@ -308,15 +302,6 @@ function renderOrderList(orders) {
   orderListContainer.innerHTML += orderHTML;
 }
 
-
-
-
-
-// function displayOrderConfirmation(orderId) {
-//   cartSection.classList.add("hidden");
-//   confirmationSection.classList.remove("hidden");
-//   orderIdElement.textContent = `Order ID: ${orderId}`;
-// }
 
 
 (async function initApp() {
@@ -372,94 +357,120 @@ function renderOrderDetails(order) {
   orderDetailsContainer.innerHTML = "";
 
 
-  const orderHTML = `
-    <h2>Order ID: ${order.id}</h2>
-    <p><strong>Total Price:</strong> ${order.total} SEK</p>
-    <h3>Items Ordered:</h3>
-    <ul>
-      ${order.items
-        .map(
-          (item) => `
-            <li>${item.name} - Quantity: ${item.quantity}, Price: ${item.price} SEK</li>
-          `
-        )
-        .join("")}
-    </ul>
-  `;
+  // const orderHTML = `
+  //   <h2>Order ID: ${order.id}</h2>
+  //   <p><strong>Total Price:</strong> ${order.total} SEK</p>
+  //   <h3>Items Ordered:</h3>
+  //   <ul>
+  //     ${order.items
+  //       .map(
+  //         (item) => `
+  //           <li>${item.name} - Quantity: ${item.quantity}, Price: ${item.price} SEK</li>
+  //         `
+  //       )
+  //       .join("")}
+  //   </ul>
+  // `;
 
 
-  orderDetailsContainer.innerHTML = orderHTML;
+  // orderDetailsContainer.innerHTML = orderHTML;
 }
 
 
 
 
+function displayOrderConfirmation(response) {
+  const orderDetails = response.order;
 
-// Function to display the order confirmation
-function displayOrderConfirmation(order) {
-  cartSection.classList.add("hidden");
-  confirmationSection.classList.remove("hidden");
-
-  // Display Order ID
-  orderIdElement.textContent = order.id;
-
-  // Save the order details temporarily for the receipt
-  localStorage.setItem("currentOrder", JSON.stringify(order));
-}
-
-// Function to render the receipt
-function renderReceipt() {
-  const order = JSON.parse(localStorage.getItem("currentOrder"));
-
-  if (!order) {
-    console.error("No order data found for the receipt.");
+  if (!orderDetails || !orderDetails.id) {
+    console.error("Order details are missing or invalid.");
     return;
   }
 
-  // Render receipt details dynamically
-  const itemsHTML = order.items
-    .map(
-      (item) => `
-        <li>
-          ${item.name} - ${item.quantity} stycken ............................... ${item.price} SEK
-        </li>`
-    )
-    .join("");
+  console.log("Order Details for Confirmation:", orderDetails);
 
-  receiptContainer.innerHTML = `
-    <ul>
-      ${itemsHTML}
-    </ul>
-  `;
+  cartSection.classList.add("hidden");
+  confirmationSection.classList.remove("hidden");
 
-  // Display total value
-  receiptTotal.textContent = `${order.orderValue} SEK`;
 
-  // Switch to receipt section
-  confirmationSection.classList.add("hidden");
-  receiptSection.classList.remove("hidden");
+  const confirmationText = document.createElement("p");
+  confirmationText.textContent = "#";
+
+  const orderIdSpan = document.createElement("span");
+  orderIdSpan.id = "orderId"; 
+  orderIdSpan.textContent = orderDetails.id;
+
+  const orderIdSection = document.querySelector(".order-id");
+  confirmationText.appendChild(orderIdSpan);
+  orderIdSection.appendChild(confirmationText);
+
+
+  viewReceiptBtn.addEventListener("click", () => {
+    console.log("Fetching receipt for Order ID:", orderDetails.id);
+    renderReceipt(orderDetails.id);
+    renderOrderList(orderDetails.id)
+  });
+
 }
 
-// Function to reset everything and return to menu
-function resetToMenu() {
-  // Reset cart
-  cart = {};
-  itemCount = 0;
-  renderCart();
-  cartCount.textContent = "0";
 
-  // Reset sections
-  receiptSection.classList.add("hidden");
-  confirmationSection.classList.add("hidden");
-  menuSection.classList.remove("hidden");
+
+
+async function renderReceipt(orderId) {
+  const url = `${apiUrl}/receipts/${orderId}`;
+  console.log("Fetching receipt from URL:", url);
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-zocom": apiKey,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error fetching receipt: ${response.status}`);
+    }
+
+    const receipt = await response.json();
+    console.log("Fetched Receipt:", receipt);
+
+
+    const itemsHTML = receipt.items
+      .map(
+        (item) => `
+          <li>
+            ${item.name} - ${item.quantity} stycken ............................... ${item.price} SEK
+          </li>`
+      )
+      .join("");
+
+    receiptContainer.innerHTML = `
+      <ul>
+        ${itemsHTML}
+      </ul>
+    `;
+
+    // Display total value
+    receiptTotal.textContent = `${receipt.orderValue} SEK`;
+
+    // Switch to receipt section
+    confirmationSection.classList.add("hidden");
+    receiptSection.classList.remove("hidden");
+  } catch (error) {
+    console.error("Failed to fetch receipt:", error.message);
+  }
 }
 
-// Event listener for "SE KVITTO"
+
 viewReceiptBtn.addEventListener("click", () => {
   renderReceipt();
 });
 
-// Event listener for "GÖR EN NY BESTÄLLNING"
+
 newOrderBtn.addEventListener("click", () => {
   resetToMenu();
 });
+
+

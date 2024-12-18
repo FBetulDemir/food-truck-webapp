@@ -1,5 +1,6 @@
 import { attachEventListeners } from "../script.js";
 
+
 export function renderMenu(menuData) {
 
   wontonItems.innerHTML = '';
@@ -16,11 +17,18 @@ export function renderMenu(menuData) {
     if (item.type === 'wonton') {
       menuItem.innerHTML = `
         <div class="wonton">
-          <h3 class="item-name">${item.name}  ...............................  <strong class="item-price">${item.price} SEK</strong></h3>
+          <div>
+            <h3 class="item-name">
+              ${item.name}
+            </h3>
+            <span class="bottom-dotted"></span>
+            <strong class="item-price">${item.price} SEK</strong> 
+          </div>
+
           <p>${item.ingredients}</p>
-          <p></p>
+          <p class="bottom-lined"></p>
         </div>
-    `;
+      `;
       wontonItems.appendChild(menuItem);
 
     } else if (item.type === 'dip') {

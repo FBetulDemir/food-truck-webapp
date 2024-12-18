@@ -95,11 +95,39 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
 }
 
-#wontonItems div{
-    background-color: #605858;
-    border-bottom:1px solid #999696;
+.menu-items .bottom-lined{
+    border-bottom:1px solid #a09b9b;
+}
+
+.wonton div {
+  display: flex;
+  align-items: center;
+
+}
+
+.item-name {
+  font-weight: bold;
+  margin-right: 8px;
+  white-space: nowrap; 
+}
+
+.bottom-dotted {
+  flex-grow: 1; 
+  border-bottom: 1px dotted white; 
+  margin: 0 8px; 
+}
+
+.item-price {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.wonton p {
+  margin: 4px 0; 
+  color: #555; 
 }
 
 #wontonItems div:hover{

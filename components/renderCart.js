@@ -22,18 +22,23 @@ export function renderCart() {
   
       const cartItem = document.createElement("div");
       cartItem.classList.add("cart-item");
-  
+      console.log(item.name);
       cartItem.innerHTML = `
-        <div class="cart-item-details">
-          <h3>${item.name}</h3>
-          <p>${item.price} SEK</p>
+        <div class="cart-wrapper">
+          <div class="cart-item-line">
+            <h3 class="item-name">${item.name}</h3>
+            <span class="line"></span>
+            <h3 class="item-price">${item.price} SEK</h3>
+          </div>
+          <div class="cart-item-quantity">
+            <button class="quantity-btn decrease" data-id="${item.id}">-</button>
+            <span>${item.quantity} stycken</span>
+            <button class="quantity-btn increase" data-id="${item.id}">+</button>
+          </div>
         </div>
-        <div class="cart-item-quantity">
-          <button class="quantity-btn decrease" data-id="${item.id}">-</button>
-          <span>${item.quantity} stycken</span>
-          <button class="quantity-btn increase" data-id="${item.id}">+</button>
-        </div>
-      `;
+    `;
+    
+    
   
       cartContainer.appendChild(cartItem);
       

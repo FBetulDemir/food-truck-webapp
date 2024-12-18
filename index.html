@@ -44,22 +44,31 @@
     </section>
     <!-- Cart Section -->
     <section class="cart-section hidden">
-        <h1>VARUKORG</h1>
+        <div class="cart-icon-position">
+            <img src="images/cart.jpg" alt="A cart icon" class="cart-image">
+        </div>
+        <!-- <h1>VARUKORG</h1> -->
         <div class="cart-container">
         
         </div>
         <div class="cart-summary">
-            <p>Total inkl. 20% moms: <span id="cartTotal">0 SEK</span></p>
+            <div class="cart-summary-header">
+              <p>
+                <span class="summary-title">TOTALT</span>
+                <span class="summary-price" id="cartTotal">120 SEK</span>
+              </p>
+              <p class="summary-subtitle">inkl 20% moms</p>
+            </div>
             <button class="checkoutBtn">TAKE MY MONEY!</button>
-            <p id="orderId"></p>
         </div>
+          
     </section>
 
     <!-- Confirmation Section -->
     <section class="confirmation-section hidden">
         <h1>DINA WONTONS TILLAGAS!</h1>
         <p>ETA 5 MIN</p>
-        <p>#<span id="orderId"></span></p>
+        <div class="order-id"></div>
         <button class="viewReceiptBtn">SE KVITTO</button>
         <button class="newOrderBtn">GÖR EN NY BESTÄLLNING</button>
     </section>
