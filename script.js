@@ -329,6 +329,14 @@ function displayOrderConfirmation(response) {
   document.body.style.backgroundColor="#605858";
 
 
+  const etaTime = new Date(orderDetails.eta);
+  const now = new Date();
+  const minutesLeft = Math.floor((etaTime - now) / (1000 * 60));
+  console.log(`Minutes left (ETA): ${minutesLeft}`);
+
+  const etaMinutes = document.querySelector(".ETA");
+  etaMinutes.textContent = `${minutesLeft} MIN`;
+
   const confirmationText = document.createElement("p");
   confirmationText.textContent = `#${orderDetails.id}`;
   const orderIdSection = document.querySelector(".order-id");
