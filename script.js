@@ -34,6 +34,7 @@ cardIcon.addEventListener("click", ()=>{
   console.log("icon clicked")
   cartSection.classList.remove("hidden");
   menuSection.classList.add("hidden");
+  document.body.style.backgroundColor="#fff";
 
 })
 
@@ -41,15 +42,14 @@ cardIcon.addEventListener("click", ()=>{
 
 function addToCart(item) {
   if (!cart[item.id]) {
-    // If item does not exist in the cart, add it
     cart[item.id] = { ...item, quantity: 1 };
   } else {
-    // If item already exists, increase the quantity
     cart[item.id].quantity += 1;
   }
   renderCart()
 }
 
+//Here is the code to listen all the clicked items on the menu
 export function attachEventListeners() {
   const menuItems = document.querySelectorAll(".menu-item");
 
@@ -93,7 +93,7 @@ export function attachEventListeners() {
   });
 }
 
-
+//This code listens to the plus and minus button on cart
 export function attachQuantityListeners() {
   const increaseButtons = document.querySelectorAll(".quantity-btn.increase");
   const decreaseButtons = document.querySelectorAll(".quantity-btn.decrease");
@@ -168,7 +168,7 @@ async function placeOrder() {
     return;
   }
 
-  const orderItems = Object.values(cart).map((item) => Number(item.id)); // Fix payload
+  const orderItems = Object.values(cart).map((item) => Number(item.id));
 
   if (orderItems.length === 0) {
     console.error("Cannot place an order. Cart is empty.");
@@ -262,46 +262,10 @@ async function fetchOrdersByTenant() {
     const orders = await response.json();
     console.log("Fetched Orders for Tenant:", orders);
 
-    // Render or handle orders here
-    //renderOrderList(orders);
   } catch (error) {
     console.error("Failed to fetch orders:", error.message);
   }
 }
-
-
-// function renderOrderList(orders) {
-//   const orderListContainer = document.querySelector(".receipt-section");
-//   orderListContainer.innerHTML = "<h2>Fetched Orders</h2>";
-
-//   if (orders.length === 0) {
-//     orderListContainer.innerHTML += "<p>No orders found.</p>";
-//     return;
-//   }
-
-//   const orderHTML = orders
-//     .map(
-//       (order) => `
-//     <div>
-//       <h3>Order ID: ${order.id}</h3>
-//       <p>Total Value: ${order.orderValue} SEK</p>
-//       <ul>
-//         ${order.items
-//           .map(
-//             (item) =>
-//               `<li>${item.name} - Quantity: ${item.quantity}, Price: ${item.price} SEK</li>`
-//           )
-//           .join("")}
-//       </ul>
-//       <p>Status: ${order.state}</p>
-//     </div>
-//   `
-//     )
-//     .join("");
-
-//   orderListContainer.innerHTML += orderHTML;
-// }
-
 
 
 (async function initApp() {
@@ -350,35 +314,6 @@ async function fetchOrderById(orderId) {
 }
 
 
-// function renderOrderDetails(order) {
-//   const orderDetailsContainer = document.querySelector(".receipt-section");
-
-
-//   orderDetailsContainer.innerHTML = "";
-
-
-//   const orderHTML = `
-//     <h2>Order ID: ${order.id}</h2>
-//     <p><strong>Total Price:</strong> ${order.total} SEK</p>
-//     <h3>Items Ordered:</h3>
-//     <ul>
-//       ${order.items
-//         .map(
-//           (item) => `
-//             <li>${item.name} - Quantity: ${item.quantity}, Price: ${item.price} SEK</li>
-//           `
-//         )
-//         .join("")}
-//     </ul>
-//   `;
-
-
-//   orderDetailsContainer.innerHTML = orderHTML;
-// }
-
-
-
-
 function displayOrderConfirmation(response) {
   const orderDetails = response.order;
 
@@ -391,17 +326,13 @@ function displayOrderConfirmation(response) {
 
   cartSection.classList.add("hidden");
   confirmationSection.classList.remove("hidden");
+  document.body.style.backgroundColor="#605858";
 
 
   const confirmationText = document.createElement("p");
-  confirmationText.textContent = "#";
-
-  const orderIdSpan = document.createElement("span");
-  orderIdSpan.id = "orderId"; 
-  orderIdSpan.textContent = orderDetails.id;
-
+  confirmationText.textContent = `#${orderDetails.id}`;
   const orderIdSection = document.querySelector(".order-id");
-  confirmationText.appendChild(orderIdSpan);
+  orderIdSection.innerHTML = "";
   orderIdSection.appendChild(confirmationText);
 
 
@@ -411,9 +342,11 @@ function displayOrderConfirmation(response) {
 
   });
 
+  newOrderBtn.addEventListener("click", () => {
+    resetToMenu();
+  });
+
 }
-
-
 
 
 async function renderReceipt(orderId) {
@@ -433,9 +366,17 @@ async function renderReceipt(orderId) {
       throw new Error(`Error fetching receipt: ${response.status}`);
     }
 
-    const receipt = await response.json();
+    const data = await response.json();
+    const receipt = data.receipt;
+
+    if (!receipt || !receipt.items) {
+      throw new Error("Receipt data is invalid or missing items.");
+    }
+
     console.log("Fetched Receipt:", receipt);
 
+    const orderIdDiv = document.querySelector(".kvitto-id");
+    orderIdDiv.textContent = `#${receipt.id}`;
 
     const itemsHTML = receipt.items
       .map(
@@ -458,20 +399,17 @@ async function renderReceipt(orderId) {
 
     confirmationSection.classList.add("hidden");
     receiptSection.classList.remove("hidden");
+    document.body.style.backgroundColor="#605858";
+
+
+    const newOrderBtnInReceipt = receiptSection.querySelector(".newOrderBtn");
+    newOrderBtnInReceipt.addEventListener("click", resetToMenu);
+
   } catch (error) {
     console.error("Failed to fetch receipt:", error.message);
   }
 }
 
-
-viewReceiptBtn.addEventListener("click", () => {
-  renderReceipt();
-});
-
-
-newOrderBtn.addEventListener("click", () => {
-  resetToMenu();
-});
 
 
 export function resetToMenu() {

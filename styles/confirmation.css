@@ -1,45 +1,43 @@
 .confirmation-section {
-    font-family: 'Fira Sans', sans-serif;
     text-align: center;
-    max-width: 400px;
+    max-width: 500px;
     margin: 2em auto;
-    background-color: #4c4444;
+    background-color: #605858;
     color: #fff;
-    border-radius: 8px;
     padding: 1.5em;
 }
 
 .confirmation-section img {
-    width: 80%;
-    max-width: 200px;
+    width: 90%;
+    max-width: 400px;
     margin-bottom: 1em;
 }
 
 .confirmation-section h1 {
-  font-size: 1.5em;
+  font-size: 2em;
   font-weight: bold;
-  margin-bottom: 0.5em;
-  letter-spacing: 1px;
+  margin-bottom: 0.8em;
+  letter-spacing: 1.5px;
 }
 
 .confirmation-section p {
   font-size: 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.7em;
   font-weight: bold;
 }
 
 .order-id {
   font-size: 0.9em;
   font-weight: normal;
-  color: #d3d3d3;
-  margin-bottom: 1.5em;
+  color: #EEEEEE;
+  margin-bottom: 2em;
 }
 
 .viewReceiptBtn,
 .newOrderBtn {
   display: block;
   width: 100%;
-  padding: 0.8em;
+  padding: 1em 1.5em;
   border: 2px solid #fff;
   background: transparent;
   color: #fff;
@@ -47,7 +45,7 @@
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
-  margin-bottom: 0.8em;
+  margin-bottom: 1em;
   border-radius: 4px;
 }
 
