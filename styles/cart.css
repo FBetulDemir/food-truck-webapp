@@ -151,3 +151,13 @@
 .checkoutBtn:hover {
   background-color: #1f1c1a;
 }
+
+@media screen and (max-width: 375px){
+  .cart-section {
+    width: 100%;
+    box-shadow:none;
+    background-color: white;
+    margin: 1em auto; 
+    padding: 1.5em;
+  }
+}

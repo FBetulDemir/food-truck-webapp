@@ -1,18 +1,20 @@
 .receipt-section {
-  background-color: #f9f9f9;
-  color: #333;
+  background-color: #EEEEEE;
+  color: #353131;
   text-align: center;
-  padding: 20px;
+  padding: 2em;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
-  width: 90%;
+  margin: 2em auto;
   max-width: 400px;
 }
 
+.kvitto-id{
+    color: #605858;
+    font-size: 14px;
+}
 
 .receipt-section h1 {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
   text-transform: uppercase;
@@ -21,34 +23,61 @@
 
 
 .receipt-container {
-  margin: 20px 0;
-}
-
-.receipt-container ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.receipt-container li {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #ddd;
-  font-size: 14px;
-}
-
-.receipt-container li:last-child {
-  border-bottom: none;
+  margin: 2em 0;
 }
 
 
 .receipt-total {
   background-color: #444;
   color: #fff;
-  padding: 10px;
-  font-size: 16px;
+  padding: 1em;
+  font-size: 20px;
   font-weight: bold;
   border-radius: 5px;
-  margin-top: 20px;
+  margin-top: 2em;
+}
+
+#receipt-total{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.receipt-total-title{
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.receipt-quantity{
+    font-size: 12px;
+    text-align: start;
+}
+
+.total-sum{
+    display: flex;
+    flex-direction: column;
+}
+
+.receipt-summary-header{
+    background-color: #d3d3d3;
+    border-radius: 4px;
+    padding: 1em 0.5em;
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 0;
+}
+
+.moms-info{
+    font-size: 10px;
+}
+
+@media screen and (max-width: 375px){
+    .receipt-section {
+      width: 100%;
+      height: 100vh;
+      box-shadow:none;
+      background-color: white;
+      margin: auto; 
+      padding: 1.5em;
+    }
 }

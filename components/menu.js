@@ -19,7 +19,7 @@ export async function fetchMenu(apiKey) {
     }
 
     const menuData = await response.json();
-    console.log('Fetched Menu Data:', menuData);
+    // console.log('Fetched Menu Data:', menuData);
     return menuData;
     
   } catch (error) {

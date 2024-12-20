@@ -389,9 +389,13 @@ async function renderReceipt(orderId) {
     const itemsHTML = receipt.items
       .map(
         (item) => `
-          <li>
-            ${item.name} - ${item.quantity} stycken ............................... ${item.price} SEK
-          </li>`
+        <div class="cart-wrapper">
+          <div class="cart-item-line">
+            <h3 class="item-name">${item.name}</h3>
+            <span class="line"></span>
+            <h3 class="item-price">${item.price} SEK</h3>
+          </div>
+          <span class="receipt-quantity">${item.quantity} stycken</span>`
       )
       .join("");
 
